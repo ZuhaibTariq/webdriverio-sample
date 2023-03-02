@@ -10,6 +10,6 @@ export class IOSCalendar extends Calendar {
 		const day: number = date.getDate()
 		const month: number = date.getMonth() + 1
 		const year: number = date.getFullYear()
-		return $(byClassChain(`**/XCUIElementTypeStaticText[\`name BEGINSWITH "Calendar_${year}-${month}-${day}"\`]`))
+		return $(byClassChain(`**/XCUIElementTypeStaticText[\`name BEGINSWITH "Calendar_${year}-0${month}-0${day}"\`]`))
 	}
 }

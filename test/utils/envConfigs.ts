@@ -20,6 +20,10 @@ export function isIOS(): boolean {
 	return platform == OS.IOS
 }
 
+export function isWeb(): boolean {
+	return platform == OS.WEB
+}
+
 function getBrandLocale(): [Brand, Locale] {
 	const br_lc: string | undefined = process.env.br_lc
 
@@ -79,7 +83,15 @@ function getEnv(key: string): string {
 	else return value
 }
 
-export function iosOptions(): Capabilities.AppiumW3CCapabilities[] {
+export function getCapabilities(): Capabilities.RemoteCapabilities {
+	return isAndroid() ? androidOptions() : isWeb() ? webOptions() : iosOptions()
+}
+
+export function getServices(): string[] {
+	return isWeb() ? ['chromedriver','geckodriver'] : []
+}
+
+function iosOptions(): Capabilities.AppiumW3CCapabilities[] {
 	return [
 		{
 			"appium:platformName": "iOS",
@@ -97,7 +109,7 @@ export function iosOptions(): Capabilities.AppiumW3CCapabilities[] {
 	]
 }
 
-export function androidOptions(): Capabilities.AppiumW3CCapabilities[] {
+function androidOptions(): Capabilities.AppiumW3CCapabilities[] {
 	const [language, region] = locale.toString().split("_")
 
 	return [
@@ -119,6 +131,17 @@ export function androidOptions(): Capabilities.AppiumW3CCapabilities[] {
 			"appium:dontStopAppOnReset": true,
 			// "appium:unicodeKeyboard": true,  // Will be used when integrating BS
 		},
+	]
+}
+
+function webOptions(): Capabilities.DesiredCapabilities[] {
+
+	return [
+		{
+			maxInstances: 5,
+			browserName: 'chrome',
+			acceptInsecureCerts: true
+		}
 	]
 }
 

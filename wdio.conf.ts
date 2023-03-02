@@ -1,7 +1,4 @@
-import { androidOptions, iosOptions, isAndroid, platform} from './test/utils/envConfigs';
-import { OS } from './test/utils/enums';
-import { EnvironmentalError } from "./test/utils/exceptions"
-import { ElementLocator } from "./test/pageobjects/base/base.page"
+import { getCapabilities, getServices } from './test/utils/envConfigs';
 import { Options } from '@wdio/types/';
 
 export const config: Options.Testrunner = {
@@ -18,7 +15,9 @@ export const config: Options.Testrunner = {
 
 	maxInstances: 1,
 
-	capabilities: isAndroid() ? androidOptions() : iosOptions(),
+	capabilities: getCapabilities(),
+
+	services: getServices(),
 
 	// Level of logging verbosity: trace | debug | info | warn | error | silent
 	logLevel: "trace",
@@ -40,25 +39,4 @@ export const config: Options.Testrunner = {
 		ui: "bdd",
 		timeout: 60000,
 	},
-
-	before: function (_capabilities, _specs) {
-
-		if (([OS.ANDROID, OS.IOS] as string[]).includes(platform)) {
-			browser.addCommand("_$", (locator: ElementLocator) => {
-				return $(driver.isAndroid ? locator.android : locator.ios);
-			}, true);
-			browser.addCommand("_$$", (locator: ElementLocator) => {
-				return $$(driver.isAndroid ? locator.android : locator.ios);
-			}, true);
-
-			// browser.addCommand("_$", (locator: ElementLocator) => {
-			// 	return $(driver.isAndroid ? locator.android : locator.ios);
-			// });
-			// browser.addCommand("_$$", (locator: ElementLocator) => {
-			// 	return $$(driver.isAndroid ? locator.android : locator.ios);
-			// });
-		}
-		else
-			throw new EnvironmentalError(`platform is required to be either '${OS.ANDROID}' or '${OS.IOS}'`);
-	}
 }

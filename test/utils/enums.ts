@@ -1,6 +1,7 @@
 export enum OS {
 	ANDROID = "android",
 	IOS = "ios",
+	WEB = "web"
 }
 
 export enum Brand {

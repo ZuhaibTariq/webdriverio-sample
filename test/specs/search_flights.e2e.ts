@@ -4,7 +4,7 @@ import { getFrontDoor } from '../pageobjects/base/frontDoorFactory';
 import { TabType } from "../pageobjects/base/front.page";
 
 
-describe("My FrontPage", () => {
+describe("Search a Flight", () => {
 	it("Search LON-BOS Today+31 - Today+33", async () => {
 		
 		const frontDoor = getFrontDoor()
@@ -19,8 +19,5 @@ describe("My FrontPage", () => {
 		await calendar.selectDate(addToDate(31), addToDate(33))
 		await smarty.search.click()
 
-		// await expect(SecurePage.flashAlert).toBeExisting();
-		// await expect(SecurePage.flashAlert).toHaveTextContaining(
-		//     'You logged into a secure area!');
 	})
 })
