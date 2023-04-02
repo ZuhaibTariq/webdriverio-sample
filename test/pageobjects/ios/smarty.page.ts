@@ -10,7 +10,7 @@ export class IOSSmartyPage extends SmartyPage {
 	originDateLC: string
 
 	airportCodeLC: string = byClassChain('**/XCUIElementTypeCell[`name BEGINSWITH "SmartyResultAirportCode"`]')
-	calendarIconLC: string = byClassChain('**/XCUIElementTypeButton[`name ENDSWITH "datesField"`]')
+	calendarIconLC: string = byClassChain('**/XCUIElementTypeImage[`name == "Utilities/calendar"`]')
 	originLC: string = byClassChain('**/XCUIElementTypeButton[`name BEGINSWITH "FDSearchOrigin"`]')
 	destinationLC: string = byClassChain('**/XCUIElementTypeButton[`name BEGINSWITH "FDSearchDestination"`]')
 	searchLC: string = byClassChain('**/XCUIElementTypeButton[`name == "FDFlightSearchButton"`]')

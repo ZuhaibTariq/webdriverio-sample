@@ -33,4 +33,5 @@ export enum By {
 	Accessiblity = "~",
 	ClassChain = "-ios class chain:",
 	ID = "id=",
+	UiAutomator = "android="
 }

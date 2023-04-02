@@ -1,6 +1,6 @@
-import { Brand, Locale } from "./enums"
+import { Brand, Locale, OS } from "./enums"
 
-export const GDPR_LOCALES: Locale[] = [
+export const GDPR_LOCALES = [
 	Locale.da_DK,
 	Locale.ko_KR,
 	Locale.de_DE,
@@ -14,15 +14,55 @@ export const GDPR_LOCALES: Locale[] = [
 ]
 
 export enum Activity {
-	FRONT_DOOR
+	FRONT_DOOR,
+	SPLASH
 }
 
-export const activityMap: Record<Activity, Record<Brand, string>> = {
+export const appPackages: Record<OS,Record<Brand, string>> = {
+	[OS.ANDROID]: {
+		[Brand.KK]: "com.kayak.android",
+		[Brand.MM]: "com.momondo.flightsearch",
+		[Brand.HC]: "com.hotelscombined.mobile",
+		[Brand.SW]: "",
+		[Brand.CX]: "",
+		[Brand.CF]: "",
+		[Brand.MU]: ""
+	},
+	[OS.IOS]: {
+		[Brand.KK]: "com.kayak.travel",
+		[Brand.MM]: "com.momondo.search",
+		[Brand.HC]: "com.hotelscombined.findhotels",
+		[Brand.SW]: "",
+		[Brand.CX]: "",
+		[Brand.CF]: "",
+		[Brand.MU]: ""
+	},
+	[OS.WEB]: {
+		[Brand.KK]: "",
+		[Brand.MM]: "",
+		[Brand.HC]: "",
+		[Brand.SW]: "",
+		[Brand.CX]: "",
+		[Brand.CF]: "",
+		[Brand.MU]: ""
+	}
+}
 
+export const activities: Record<Activity, Record<Brand, string>> = {
 	[Activity.FRONT_DOOR]: {
 		[Brand.KK]: ".frontdoor.FrontDoorActivity",
 		[Brand.MM]: "com.kayak.android.frontdoor.FrontDoorActivity",
 		[Brand.HC]: "com.kayak.android.frontdoor.FrontDoorActivity",
+		[Brand.CF]: "",
+		[Brand.CX]: "",
+		[Brand.MU]: "",
+		[Brand.SW]: ""
+	},
+
+	[Activity.SPLASH]: {
+		[Brand.KK]: "com.kayak.android.splash.Splash",
+		[Brand.MM]: "com.kayak.android.splash.Splash",
+		[Brand.HC]: "com.kayak.android.splash.Splash",
 		[Brand.CF]: "",
 		[Brand.CX]: "",
 		[Brand.MU]: "",
