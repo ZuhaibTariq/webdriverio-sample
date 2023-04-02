@@ -8,8 +8,9 @@ export class IOSCalendar extends Calendar {
 
 	public findDate(date: Date) {
 		const day: number = date.getDate()
-		const month: number = date.getMonth() + 1
+		const month: string = date.toLocaleString("en-US", { month: "long" })
 		const year: number = date.getFullYear()
-		return $(byClassChain(`**/XCUIElementTypeStaticText[\`name BEGINSWITH "Calendar_${year}-0${month}-0${day}"\`]`))
+		// return $(byClassChain(`**/XCUIElementTypeStaticText[\`label ENDSWITH "${month} ${day}, ${year}"\`]`))
+		return $(byClassChain(`**/XCUIElementTypeStaticText[\`label ENDSWITH "${month} ${day}, ${year}" OR label ENDSWITH " ${day} ${month} ${year}"\`]`))
 	}
 }

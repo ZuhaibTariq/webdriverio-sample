@@ -16,9 +16,12 @@ export class AndroidFrontPage extends FrontPage {
 	searchBarLC: string = byID("searchField")
 
 	acceptGDPRLC: string = byID("okButton")
+	skipLoginLC: string = byID("skip")
 
 	public async waitForFrontDoor() {
 		await this.acceptGDPR()
+		if (await $(this.skipLoginLC).isExisting())
+			await $(this.skipLoginLC).click()
 		await waitForActivity(Activity.FRONT_DOOR)
 	}
 }

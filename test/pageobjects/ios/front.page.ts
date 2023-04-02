@@ -22,13 +22,18 @@ export class IOSFrontPage extends FrontPage {
 		await this.acceptGDPR()
 
 		// Skip Apple ID Sign in
-		let element = $(byPredicate('type == "XCUIElementTypeButton" and name == "close"'))
-		await driver.waitUntil(async () => await element.isDisplayed())
-		await element.click()
+		const appleSignIn = $(byPredicate('**/XCUIElementTypeStaticText[`label == "Skip" OR label == "close"`]'))
+		if (await appleSignIn.isExisting()) {
+			await driver.waitUntil(async () => await appleSignIn.isDisplayed())
+			await appleSignIn.click()
+		}
 
 		// Skip Login Screen
-		element = $(byPredicate('type == "XCUIElementTypeButton" and label == "AUTHSkipButton"'))
-		await driver.waitUntil(async () => await element.isDisplayed())
-		await element.click()
+		const skipLoginButton = $(byPredicate('type == "XCUIElementTypeButton" and label == "AUTHSkipButton"'))
+		if (await skipLoginButton.isExisting()) {
+			await driver.waitUntil(async () => await skipLoginButton.isDisplayed())
+		await skipLoginButton.click()
+		}
+		
 	}
 }

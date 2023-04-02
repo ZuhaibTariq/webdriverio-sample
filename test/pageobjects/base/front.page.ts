@@ -33,10 +33,11 @@ export abstract class FrontPage extends Base {
 	}
 
 	public async acceptGDPR() {
-		console.log(GDPR_LOCALES)
 		if (GDPR_LOCALES.includes(locale))
 		{
-			await $(this.acceptGDPRLC).click()
+			const gdprConsentButton = $(this.acceptGDPRLC)
+			if (await gdprConsentButton.isExisting())
+				await gdprConsentButton.click()
 		} 
 	}
 

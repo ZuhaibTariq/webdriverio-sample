@@ -3,6 +3,7 @@ import { Capabilities } from "@wdio/types"
 import { EnvironmentalError } from "./exceptions"
 import * as pathModule from "path"
 import * as fs from "fs"
+import { Activity, activities, appPackages } from "./constants"
 
 function getPlatform(): OS {
 	const platform: string | undefined = process.env.platform?.toLowerCase()
@@ -33,8 +34,13 @@ function getBrandLocale(): [Brand, Locale] {
 
 	if (splits.length != 2 || splits[1].split("_").length != 2)
 		throw new EnvironmentalError(`'${br_lc}' Brand / Locale is invalid. Example 'br_lc=kayak:en_US'`)
+	
+	if (Locale[splits[1]] === undefined) {
+		const listOfSupportedLocales = Object.values(Locale).filter(value => typeof value === 'string').toString()
+		throw new EnvironmentalError(`'Locale is Unsupported. Supported Locales: ${listOfSupportedLocales}'`)
+	}
 
-	return [splits[0] as Brand, splits[1] as unknown as Locale]
+	return [splits[0] as Brand, Locale[splits[1] as keyof typeof Locale] as Locale]
 }
 
 export const [brand, locale] = getBrandLocale()
@@ -52,7 +58,7 @@ function getOSVersion(): string | never {
 }
 
 export function getLocalizedStrings(locale: Locale) {
-	const fileName = `strings/${locale.toString().split("_")[0]}.json`
+	const fileName = `strings/${Locale[locale].split("_")[0]}.json`
 	try {
 		return JSON.parse(fs.readFileSync(fileName).toString("utf-8")) as Record<string, string>
 	} catch (err) {
@@ -99,7 +105,7 @@ function iosOptions(): Capabilities.AppiumW3CCapabilities[] {
 			"appium:automationName": "XCUITest",
 			"appium:platformVersion": getOSVersion(),
 			"appium:udid": getEnv("DEVICE_UUID"),
-			"appium:locale": locale.toString(),
+			"appium:locale": Locale[locale],
 			"appium:app": getBuildPath("./builds/master/", OS.IOS, brand),
 			"appium:noReset": true,
 			//@ts-expect-error Capabilities not currently supported by @wdio/appium-client
@@ -110,7 +116,7 @@ function iosOptions(): Capabilities.AppiumW3CCapabilities[] {
 }
 
 function androidOptions(): Capabilities.AppiumW3CCapabilities[] {
-	const [language, region] = locale.toString().split("_")
+	const [language, region] = Locale[locale].split("_")
 
 	return [
 		{
@@ -121,14 +127,16 @@ function androidOptions(): Capabilities.AppiumW3CCapabilities[] {
 			"appium:language": language,
 			"appium:locale": region,
 			"appium:udid": getEnv("DEVICE_UUID"),
-			"appium:appWaitActivity": "*",
-			"appium:app": getBuildPath("./builds/master/", OS.ANDROID,brand),
+			// "appium:appWaitActivity": "*",
+			// "appium:app": getBuildPath("./builds/master/", OS.ANDROID, brand),
+			"appium:appPackage": appPackages[platform][brand],
 			"appium:noReset": true,
 			//@ts-expect-error Capabilities not currently supported by @wdio/appium-client
+			"appium:appActivity": activities[Activity.SPLASH][brand],
 			"appium:appWaitDuration": 50000,
 			"appium:gpsEnabled": true,
 			"appium:uiautomator2ServerInstallTimeout": 120000,
-			"appium:dontStopAppOnReset": true,
+			// "appium:dontStopAppOnReset": true,
 			// "appium:unicodeKeyboard": true,  // Will be used when integrating BS
 		},
 	]
@@ -161,6 +169,11 @@ export function byID(locator: string): string {
 export function byAccessibility(locator: string): string {
 	return By.Accessiblity + locator
 }
+
+export function byUiAutomator(locator: string): string {
+	return By.UiAutomator + locator
+}
+
 export function byClassChain(locator: string): string {
 	return By.ClassChain + locator
 }
