@@ -1,7 +1,7 @@
 
 import { addToDate } from "../utils/envConfigs"
-import { getFrontDoor } from '../pageobjects/base/frontDoorFactory';
-import { TabType } from "../pageobjects/base/front.page";
+import { getFrontDoor } from '../pageObjects/base/frontDoorFactory';
+import { TabType } from "../pageObjects/base/front.page";
 
 
 describe("Search a Flight", () => {

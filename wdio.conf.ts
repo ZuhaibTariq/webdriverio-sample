@@ -32,8 +32,8 @@ export const config: Options.Testrunner = {
 
 	framework: "mocha",
 
-	// reporters: ["spec", ["allure", { outputDir: "allure-results" }]],
-	reporters: ["spec"],
+	reporters: ["spec", ["allure", { outputDir: "allure-results" }]],
+	// reporters: ["spec"],
 
 	mochaOpts: {
 		ui: "bdd",
