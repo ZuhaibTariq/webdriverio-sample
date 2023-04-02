@@ -106,7 +106,7 @@ function iosOptions(): Capabilities.AppiumW3CCapabilities[] {
 			"appium:platformVersion": getOSVersion(),
 			"appium:udid": getEnv("DEVICE_UUID"),
 			"appium:locale": Locale[locale],
-			"appium:app": getBuildPath("./builds/master/", OS.IOS, brand),
+			"appium:app": appPackages[platform][brand],
 			"appium:noReset": true,
 			//@ts-expect-error Capabilities not currently supported by @wdio/appium-client
 			"appium:waitForQuiescence": false,
