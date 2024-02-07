@@ -1,7 +1,7 @@
-Automated testing for KAYAK Web, Android and iOS mobile applications for Kayak, Momondo, Hotelscombined on en-US, da-DK and ko-KR Locales
+Automated testing for a Test Website
 # 1. Installation
 
-Automated testing for KAYAK Android & iOS mobile applications should be able to work with Python3
+Automated testing for Test Website Android & iOS mobile applications should be able to work with Python3
 
 ### 1.1.1 [nodeJS](https://nodejs.org/en/)
 
@@ -78,7 +78,7 @@ Once the above installation is complete setup following,
         DEVICE_UUID = " <Your Device UUID>"
         DEVICE_VERSION = " <Your device version>"
 
-  - Install KAYAK, Momondo, Hotelscombined iOS/Android apps from playstore
+  - Install Test iOS/Android apps from playstore
   - Clone / Download the source code
   - Run the `npm install` to install the requirements
 
@@ -86,15 +86,15 @@ Once the above installation is complete setup following,
 
 Execution can be started using following `npm` commands,
 
-    platform=ios br_lc=kayak:en_US npm run wdio
+    platform=ios br_lc=testapp:en_US npm run wdio
 
 For Android
 
-    platform=android br_lc=kayak:en_US npm run wdio
+    platform=android br_lc=testapp:en_US npm run wdio
 
 For Different Brand/Locale combination
 
-    platform=ios br_lc=momondo:da_DK npm run wdio
+    platform=ios br_lc=testapp:da_DK npm run wdio
 
 ## 4. Reporting
 
